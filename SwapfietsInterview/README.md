@@ -1,7 +1,10 @@
-# Requirements
+# Swapfiets Bicycle Theft
+![](screenshot.png)
+
+## Requirements
 - Microsoft .NET 5.0
 - Angular 11
-# How to run
+## How to run
 - ``cd SwapfietsInterview``
 - ``dotnet run``
 - ``cd Frontend``

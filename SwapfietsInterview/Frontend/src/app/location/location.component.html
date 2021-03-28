@@ -1,0 +1,78 @@
+<div class="padding" fxFlex="50%">
+  <mat-card>
+    <mat-table [dataSource]="locations">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>City</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <mat-header-cell *matHeaderCellDef>Country</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.country}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{locationStatusMapping[row.locationStatus]}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="incidents">
+        <mat-header-cell *matHeaderCellDef>Number of incidents</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-spinner *ngIf="incidents[row.id] === undefined" [diameter]="30"></mat-spinner>
+          <p *ngIf="incidents[row.id] !== false">{{ incidents[row.id] }}</p>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['name', 'country', 'status', 'incidents']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['name', 'country', 'status', 'incidents']"></mat-row>
+    </mat-table>
+  </mat-card>
+</div>
+<div class="padding" fxFlex="50%">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Add new Location</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" [formGroup]="locationForm">
+        <div fxLayout="row">
+          <mat-form-field fxFlex="50%">
+            <mat-label>Name</mat-label>
+            <input formControlName="name" matInput required pattern="[a-zA-Z ]+">
+          </mat-form-field>
+          <mat-form-field fxFlex="50%">
+            <mat-label>Country</mat-label>
+            <input formControlName="country" matInput required pattern="[a-zA-Z ]+">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field fxFlex="33%">
+            <mat-label>Latitude</mat-label>
+            <input formControlName="latitude" matInput required pattern="(\-?\d+\.\d+)">
+          </mat-form-field>
+          <mat-form-field fxFlex="33">
+            <mat-label>Longitude</mat-label>
+            <input formControlName="longitude" matInput required pattern="(\-?\d+\.\d+)">
+          </mat-form-field>
+          <mat-form-field fxFlex="33%">
+            <mat-label>Proximity</mat-label>
+            <input formControlName="proximitySize" matInput required pattern="\d+">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field fxFlex="20%">
+            <mat-label>Location status</mat-label>
+            <mat-select formControlName="locationStatus">
+              <mat-option value=0>Active</mat-option>
+              <mat-option value=1>Inactive</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <button mat-raised-button type="submit" color="primary">Save</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
